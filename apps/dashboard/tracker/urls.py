@@ -3,6 +3,6 @@ from . import views
 
 
 urlpatterns = [
-    path("", views.tracker, name="tracker"),
-    path("connect-wallet", views.connect_wallet, name="connect-wallet"),
+    path("", views.Tracker.as_view(), name="tracker"),
+    path("connect-wallet", views.ConnectWallet.as_view(), name="connect-wallet"),
 ]

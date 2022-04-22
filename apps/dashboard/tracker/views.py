@@ -1,17 +1,23 @@
 import requests
+from django.views import View
 from django.shortcuts import render
 
 BASE_URL = "https://api.ethplorer.io/getAddressInfo/"
 
 
-def tracker(request):
-    return render(request, "tracker/tracker.html")
+class Tracker(View):
+    def get(self, request):
+        return render(request, "tracker/tracker.html")
+
+    def post(self, request):
+        return render(request, "tracker/tracker.html")
 
 
-def connect_wallet(request):
-    context = {}
+class ConnectWallet(View):
+    def get(self, request):
+        return render(request, "tracker/connect-wallet.html", self.create_context())
 
-    if request.method == "POST":
+    def post(self, request):
         balance = {}
         url = BASE_URL + request.POST.get("public-key")
         params = {"apiKey": "freekey"}
@@ -31,4 +37,8 @@ def connect_wallet(request):
         for value in balance:
             print(value + ": " + str(balance[value]))
 
-    return render(request, "tracker/connect-wallet.html", context)
+        return render(request, "tracker/connect-wallet.html", self.create_context())
+
+    def create_context(self):
+        context = {}
+        return context
