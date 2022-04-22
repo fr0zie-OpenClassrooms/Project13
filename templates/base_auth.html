@@ -7,6 +7,7 @@
     <title>CoinSpace</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{% static 'images/favicon.ico' %}">
+    <link href="{% static 'css/coinspace.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'css/icons.min.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'css/app.min.css' %}" rel="stylesheet" type="text/css" id="app-style" />
 </head>
@@ -15,6 +16,20 @@
     <div class="auth-fluid">
         <div class="auth-fluid-form-box">
             <div class="align-items-center d-flex h-100">
+                <div id="popup">
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="{{ message.tags }}" role="alert">
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
+                            aria-label="Close"></button>
+                        <i
+                            class="dripicons-{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}checkmark{% else %}wrong{% endif %} me-2"></i>
+                        <span>{{ message }}</span>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+
                 <div class="card-body">
                     {% block content %}
                     {% endblock %}
@@ -24,17 +39,12 @@
 
         <div class="auth-fluid-right text-center">
             <div class="auth-user-testimonial">
-                <h2 class="mb-3">I love the color!</h2>
-                <p class="lead"><i class="mdi mdi-format-quote-open"></i> It's a elegent templete. I love it very much!
-                    . <i class="mdi mdi-format-quote-close"></i>
-                </p>
-                <p>
-                    - Hyper Admin User
-                </p>
+                <h2 class="mb-3">All your crypto in one place!</h2>
             </div>
         </div>
     </div>
 
+    <script src="{% static 'js/coinspace.js' %}"></script>
     <script src="{% static 'js/vendor.min.js' %}"></script>
     <script src="{% static 'js/app.min.js' %}"></script>
 </body>

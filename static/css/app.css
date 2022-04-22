@@ -14803,12 +14803,12 @@ body[data-layout-color=dark][data-layout=detached] .leftbar-user .leftbar-user-n
   height: 32px;
   width: 32px;
 }
-.nav-user .account-position {
+.nav-user .account-email {
   display: block;
   font-size: 12px;
   margin-top: -3px;
 }
-.nav-user .account-user-name {
+.nav-user .account-username {
   display: block;
   font-weight: 600;
 }
@@ -14870,8 +14870,8 @@ body[data-layout-color=dark][data-layout=detached] .leftbar-user .leftbar-user-n
   .nav-user {
     padding: 17px 5px 17px 57px !important;
   }
-  .nav-user .account-position,
-.nav-user .account-user-name {
+  .nav-user .account-email,
+.nav-user .account-username {
     display: none;
   }
 }

@@ -2,6 +2,7 @@ import os
 import sys
 from dotenv import load_dotenv
 from pathlib import Path
+from django.contrib.messages import constants as messages
 
 load_dotenv()
 
@@ -40,6 +41,13 @@ MIDDLEWARE = [
 ROOT_URLCONF = "config.urls"
 # ROOT_HOSTCONF = "config.hosts"
 # DEFAULT_HOST = "www"
+
+MESSAGE_TAGS = {
+    messages.ERROR: "alert alert-dismissible alert-danger",
+    messages.SUCCESS: "alert alert-dismissible alert-success",
+    messages.WARNING: "alert alert-dismissible alert-warning",
+    messages.INFO: "alert alert-dismissible alert-info",
+}
 
 TEMPLATES = [
     {

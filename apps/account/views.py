@@ -21,12 +21,10 @@ class Login(View):
             user = authenticate(username=username, password=password)
             if user is not None:
                 auth_login(request, user)
-                messages.info(request, f"You are now logged in as {username}.")
+                messages.success(request, f"You are now logged in as {username}.")
                 return redirect("tracker")
-            else:
-                messages.error(request, "Invalid username or password.")
-        else:
-            messages.error(request, "Invalid username or password.")
+        messages.error(request, "Invalid username or password.")
+        return redirect("login")
 
 
 class Register(View):
@@ -51,8 +49,8 @@ class Register(View):
 
 def logout(request):
     auth_logout(request)
-    messages.info(request, "You have successfully logged out.")
-    return redirect("tracker")
+    messages.success(request, "You have successfully logged out.")
+    return redirect("login")
 
 
 @login_required(login_url="login")

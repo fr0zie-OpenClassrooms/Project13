@@ -1,4 +1,5 @@
 import requests
+from django.contrib.auth.decorators import login_required
 from django.views import View
 from django.shortcuts import render
 
@@ -31,7 +32,7 @@ class ConnectWallet(View):
                 token_symbol = token["tokenInfo"]["symbol"]
                 token_balance = token["balance"] / (10**token_decimals)
                 balance[token_symbol] = token_balance
-            except:
+            except Exception:
                 continue
 
         for value in balance:

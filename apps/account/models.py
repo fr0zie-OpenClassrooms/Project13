@@ -1,3 +1,4 @@
+from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
@@ -6,3 +7,8 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def hidden_email(self):
+        name, host = self.email.split("@")
+        name = name[:2] + "*****"
+        return name + "@" + host
