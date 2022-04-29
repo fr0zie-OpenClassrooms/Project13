@@ -53,7 +53,16 @@ class LoginForm(AuthenticationForm):
             attrs={"class": "form-control", "placeholder": "Enter your password"}
         )
     )
+    remember_me = forms.BooleanField(
+        widget=forms.CheckboxInput(
+            attrs={
+                "class": "form-check-input",
+                "id": "checkbox-signin",
+            }
+        ),
+        required=False,
+    )
 
     class Meta:
         model = User
-        fields = ("username", "password")
+        fields = ("username", "password", "remember_me")

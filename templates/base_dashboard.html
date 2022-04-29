@@ -48,6 +48,13 @@
                         <div class="collapse" id="sidebarDashboards">
                             <ul class="side-nav-second-level">
                                 <li>
+                                    <a href="{% url 'view-holdings' %}">View holdings</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="collapse" id="sidebarDashboards">
+                            <ul class="side-nav-second-level">
+                                <li>
                                     <a href="{% url 'connect-wallet' %}">Connect wallet</a>
                                 </li>
                             </ul>
@@ -125,7 +132,7 @@
                             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert"
                                 aria-label="Close"></button>
                             <i
-                                class="dripicons-{% if message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}checkmark{% else %}wrong{% endif %} me-2"></i>
+                                class="dripicons-{% if message.level == DEFAULT_MESSAGE_LEVELS.INFO %}information{% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}checkmark{% else %}wrong{% endif %} me-2"></i>
                             <span>{{ message }}</span>
                         </div>
                         {% endfor %}

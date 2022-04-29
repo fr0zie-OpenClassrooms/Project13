@@ -10,5 +10,5 @@ class User(AbstractUser):
 
     def hidden_email(self):
         name, host = self.email.split("@")
-        name = name[:2] + "*****"
-        return name + "@" + host
+        name = name[:2] + 4 * "*"
+        return "@".join([name, host])

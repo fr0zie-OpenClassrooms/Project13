@@ -18,9 +18,12 @@ class Login(View):
         if form.is_valid():
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
+            remember_me = form.cleaned_data["remember_me"]
             user = authenticate(username=username, password=password)
-            if user is not None:
+            if user:
                 auth_login(request, user)
+                if not remember_me:
+                    request.session.set_expiry(0)
                 messages.success(request, f"You are now logged in as {username}.")
                 return redirect("tracker")
         messages.error(request, "Invalid username or password.")

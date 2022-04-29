@@ -1,9 +1,10 @@
-import requests
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.utils.safestring import mark_safe
 from django.views import View
-from django.shortcuts import render
-
-BASE_URL = "https://api.ethplorer.io/getAddressInfo/"
+from django.shortcuts import redirect, render
+from .blockchain import get_address_details, get_wallets_details
+from .models import Address
 
 
 class Tracker(View):
@@ -19,27 +20,51 @@ class ConnectWallet(View):
         return render(request, "tracker/connect-wallet.html", self.create_context())
 
     def post(self, request):
-        balance = {}
-        url = BASE_URL + request.POST.get("public-key")
-        params = {"apiKey": "freekey"}
-        result = requests.get(url, params).json()
+        user = request.user
+        label = request.POST.get("label")
+        public_key = request.POST.get("public-key")
+        details = get_address_details(public_key)
 
-        balance["ETH"] = result["ETH"]["balance"]
+        if not "error" in details:
+            address = Address.objects.filter(public_key=public_key, user=user)
 
-        for token in result["tokens"]:
-            try:
-                token_decimals = int(token["tokenInfo"]["decimals"])
-                token_symbol = token["tokenInfo"]["symbol"]
-                token_balance = token["balance"] / (10**token_decimals)
-                balance[token_symbol] = token_balance
-            except Exception:
-                continue
-
-        for value in balance:
-            print(value + ": " + str(balance[value]))
+            if address.exists():
+                messages.info(
+                    request,
+                    mark_safe(f"Wallet <code>{public_key}</code> is already imported."),
+                )
+            else:
+                address = Address.objects.create(
+                    label=label, public_key=public_key, user=user
+                )
+                messages.success(
+                    request,
+                    mark_safe(
+                        f"Wallet <code>{public_key}</code> successfully connected!"
+                    ),
+                )
+        else:
+            messages.error(
+                request, mark_safe(f"Wallet <code>{public_key}</code> not found.")
+            )
 
         return render(request, "tracker/connect-wallet.html", self.create_context())
 
     def create_context(self):
         context = {}
+        return context
+
+
+class Balance(View):
+    def get(self, request):
+        wallets = get_wallets_details(request.user)
+        return render(
+            request, "tracker/view-holdings.html", self.create_context(wallets)
+        )
+
+    def post(self, request):
+        return render(request, "tracker/view-holdings.html", self.create_context())
+
+    def create_context(self, wallets):
+        context = {"wallets": wallets}
         return context

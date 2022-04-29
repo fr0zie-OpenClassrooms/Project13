@@ -1,0 +1,80 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Holdings</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        {% for wallet in wallets %}
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h4 class="header-title mb-0">{{wallet.label}}</h4>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-centered table-nowrap mb-0">
+                        <thead>
+                            <tr>
+                                <th class="holdings" scope="col">Name</th>
+                                <th class="holdings" scope="col">Amount</th>
+                                <th class="holdings" scope="col">Price</th>
+                                <th class="holdings" scope="col">Value</th>
+                                <th class="holdings text-end" scope="col">24 hours P/L</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for token in wallet.tokens %}
+                            {% if token.balance > 0 %}
+                            <tr>
+                                <td class="holdings">
+                                    <span class="fw-semibold">
+                                        {{token.name}}
+                                    </span>
+                                </td>
+                                <td class="holdings">
+                                    <span class="fw-semibold">
+                                        {{token.balance}} {{token.symbol}}
+                                    </span>
+                                </td>
+                                <td class="holdings">
+                                    <span class="fw-semibold">
+                                        {% if token.price > 0 %}{{token.price}} ${% else %}-{% endif %}
+                                    </span>
+                                </td>
+                                <td class="holdings">
+                                    <span class="fw-semibold">
+                                        {% if token.price > 0 %}{{token.value}} ${% else %}-{% endif %}
+                                    </span>
+                                </td>
+                                <td class="holdings text-end">
+                                    {% if token.price > 0 %}
+                                    <span
+                                        class="text-{% if token.pl_pos %}success{% else %}danger{% endif %} fw-semibold">
+                                        {{token.pl}} %
+                                    </span>
+                                    {% else %}
+                                    <span class="fw-semibold">
+                                        -
+                                    </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% endblock %}
