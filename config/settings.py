@@ -8,21 +8,28 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
+STATIC_URL = "static/"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+
 SECRET_KEY = os.environ["SECRET_KEY"]
+
 DEBUG = True
+
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
+    "apps.home.apps.HomeConfig",
+    "apps.account.apps.AccountConfig",
+    "apps.dashboard.data.apps.DataConfig",
+    "apps.dashboard.tracker.apps.TrackerConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.home.apps.HomeConfig",
-    "apps.account.apps.AccountConfig",
-    "apps.dashboard.data.apps.DataConfig",
-    "apps.dashboard.tracker.apps.TrackerConfig",
     # "django_hosts",
 ]
 
@@ -101,10 +108,5 @@ LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
-
-STATIC_URL = "static/"
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

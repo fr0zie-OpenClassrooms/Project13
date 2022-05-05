@@ -34,15 +34,18 @@ class ConnectWallet(View):
                     mark_safe(f"Wallet <code>{public_key}</code> is already imported."),
                 )
             else:
-                address = Address.objects.create(
-                    label=label, public_key=public_key, user=user
-                )
-                messages.success(
-                    request,
-                    mark_safe(
-                        f"Wallet <code>{public_key}</code> successfully connected!"
-                    ),
-                )
+                if len(public_key) == 42:
+                    address = Address.objects.create(
+                        label=label, public_key=public_key, user=user
+                    )
+                    messages.success(
+                        request,
+                        mark_safe(
+                            f"Wallet <code>{public_key}</code> successfully connected!"
+                        ),
+                    )
+                else:
+                    messages.error(request, "Incorrect wallet public key.")
         else:
             messages.error(
                 request, mark_safe(f"Wallet <code>{public_key}</code> not found.")

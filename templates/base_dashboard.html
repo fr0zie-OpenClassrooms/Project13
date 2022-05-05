@@ -37,28 +37,19 @@
 
             <div class="h-100" id="leftside-menu-container" data-simplebar>
                 <ul class="side-nav">
-                    <li class="side-nav-title side-nav-item">Apps</li>
+                    <li class="side-nav-title side-nav-item">Tracker</li>
 
                     <li class="side-nav-item">
-                        <a data-bs-toggle="collapse" href="#sidebarDashboards" aria-expanded="false"
-                            aria-controls="sidebarDashboards" class="side-nav-link">
-                            <i class="uil-home-alt"></i>
-                            <span>Tracker</span>
+                        <a href="{% url 'view-holdings' %}" class="side-nav-link">
+                            <i class="uil-bitcoin-circle"></i>
+                            <span>View holdings</span>
                         </a>
-                        <div class="collapse" id="sidebarDashboards">
-                            <ul class="side-nav-second-level">
-                                <li>
-                                    <a href="{% url 'view-holdings' %}">View holdings</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="collapse" id="sidebarDashboards">
-                            <ul class="side-nav-second-level">
-                                <li>
-                                    <a href="{% url 'connect-wallet' %}">Connect wallet</a>
-                                </li>
-                            </ul>
-                        </div>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{% url 'connect-wallet' %}" class="side-nav-link">
+                            <i class="uil-link"></i>
+                            <span>Connect wallet</span>
+                        </a>
                     </li>
                 </ul>
             </div>

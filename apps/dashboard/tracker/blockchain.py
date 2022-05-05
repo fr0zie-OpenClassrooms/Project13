@@ -177,6 +177,14 @@ class Token:
         """Returns True if 24hrs change is positive, False otherwise."""
         return False if "-" in str(self.change) else True
 
-    def value(self):
-        """Returns tokens value rounded to 2 decimals."""
+    def get_value(self):
+        """Returns token value rounded to 2 decimals."""
         return round(float(self.price * self.balance), 2)
+
+    def get_balance(self):
+        """Returns token balance rounded to 8 decimals."""
+        return round(float(self.balance), 8)
+
+    def get_price(self):
+        """Returns token price rounded to 8 decimals."""
+        return round(float(self.price), 8)

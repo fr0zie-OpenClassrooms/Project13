@@ -24,6 +24,9 @@ jobs:
       - run:
           name: Run tests
           command: pytest
+      - run:
+          name: Check PEP8
+          command: flake8
 
 workflows:
   sample:

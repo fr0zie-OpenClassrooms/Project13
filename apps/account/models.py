@@ -1,4 +1,3 @@
-from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
@@ -12,3 +11,6 @@ class User(AbstractUser):
         name, host = self.email.split("@")
         name = name[:2] + 4 * "*"
         return "@".join([name, host])
+
+    class Meta:
+        app_label = "account"

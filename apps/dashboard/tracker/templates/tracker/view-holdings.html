@@ -40,17 +40,17 @@
                                 </td>
                                 <td class="holdings">
                                     <span class="fw-semibold">
-                                        {{token.balance}} {{token.symbol}}
+                                        {{token.get_balance}} {{token.symbol}}
                                     </span>
                                 </td>
                                 <td class="holdings">
                                     <span class="fw-semibold">
-                                        {% if token.price > 0 %}{{token.price}} ${% else %}-{% endif %}
+                                        {% if token.price > 0 %}{{token.get_price}} ${% else %}-{% endif %}
                                     </span>
                                 </td>
                                 <td class="holdings">
                                     <span class="fw-semibold">
-                                        {% if token.price > 0 %}{{token.value}} ${% else %}-{% endif %}
+                                        {% if token.price > 0 %}{{token.get_value}} ${% else %}-{% endif %}
                                     </span>
                                 </td>
                                 <td class="holdings text-end">

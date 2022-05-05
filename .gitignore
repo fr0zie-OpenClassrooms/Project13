@@ -1,0 +1,11 @@
+.env
+.venv
+.temp
+*.lnk
+.pytest_cache
+__pycache__
+migrations
+freeze
+runserver
+startapp
+startdapp
