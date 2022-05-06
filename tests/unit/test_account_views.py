@@ -1,17 +1,19 @@
-import pytest, django
+import pytest, django, os
 from django.urls import reverse
 from django.test import Client
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
 from apps.account.forms import LoginForm, RegistrationForm
+from apps.account.models import User
 
 
 class TestAccountViews:
     def setup_method(self):
         self.user = {
-            "username": "TestUser",
-            "email": "testuser@purbeurre.fr",
+            "username": "Test",
+            "email": "test@coinspace.com",
             "password1": "t8VhtmOUpYJ39Tb0",
             "password2": "t8VhtmOUpYJ39Tb0",
         }
@@ -40,6 +42,13 @@ class TestAccountViews:
         client = Client()
         response = client.get(self.login_url)
         assert response.status_code == 200
+
+    @pytest.mark.django_db
+    def test_user_can_login(self):
+        client = Client()
+        user = User.objects.create(self.user)
+        response = client.post(self.login_url, self.user, format="text/html")
+        assert response.status_code == 302
 
     @pytest.mark.django_db
     def test_user_cant_login(self):

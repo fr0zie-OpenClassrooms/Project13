@@ -1,5 +1,6 @@
-import pytest, django
+import pytest, django, os
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
 django.setup()
 
 from apps.account.models import User
@@ -18,8 +19,14 @@ class TestAccountModels:
     def test_get_user_by_email(self):
         user = User.objects.get(email="test@coinspace.com")
         assert user.username == "Test"
+        assert user == "Test"
 
     @pytest.mark.django_db
     def test_get_user_by_username(self):
         user = User.objects.get(username="Test")
         assert user.email == "test@coinspace.com"
+
+    @pytest.mark.django_db
+    def test_get_user_hidden_email(self):
+        user = User.objects.get(username="Test")
+        assert user.hidden_email == "te****@coinspace.com"
