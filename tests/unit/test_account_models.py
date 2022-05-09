@@ -1,9 +1,6 @@
-import pytest, django, os
+import pytest
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-django.setup()
-
-from apps.account.models import User
+from account.models import User
 
 
 class TestAccountModels:

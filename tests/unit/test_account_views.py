@@ -1,12 +1,9 @@
-import pytest, django, os
+import pytest
 from django.urls import reverse
 from django.test import Client
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
-django.setup()
-
-from apps.account.forms import LoginForm, RegistrationForm
-from apps.account.models import User
+from account.forms import LoginForm, RegistrationForm
+from account.models import User
 
 
 class TestAccountViews:

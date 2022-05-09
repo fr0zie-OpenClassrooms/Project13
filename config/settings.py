@@ -7,7 +7,6 @@ from django.contrib.messages import constants as messages
 load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, os.path.join(BASE_DIR, "apps"))
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
@@ -20,10 +19,10 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
-    "apps.home.apps.HomeConfig",
-    "apps.account.apps.AccountConfig",
-    "apps.dashboard.data.apps.DataConfig",
-    "apps.dashboard.tracker.apps.TrackerConfig",
+    "home.apps.HomeConfig",
+    "account.apps.AccountConfig",
+    "data.apps.DataConfig",
+    "tracker.apps.TrackerConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",

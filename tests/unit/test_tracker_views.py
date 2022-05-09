@@ -1,10 +1,8 @@
-import pytest, django
+import pytest
 from django.urls import reverse
 from django.test import Client
 
-django.setup()
-
-from apps.dashboard.tracker.models import Address
+from tracker.models import Address
 
 
 class TestTrackerViews:
