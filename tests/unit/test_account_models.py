@@ -16,7 +16,6 @@ class TestAccountModels:
     def test_get_user_by_email(self):
         user = User.objects.get(email="test@coinspace.com")
         assert user.username == "Test"
-        assert user == "Test"
 
     @pytest.mark.django_db
     def test_get_user_by_username(self):
@@ -26,4 +25,4 @@ class TestAccountModels:
     @pytest.mark.django_db
     def test_get_user_hidden_email(self):
         user = User.objects.get(username="Test")
-        assert user.hidden_email == "te****@coinspace.com"
+        assert user.hidden_email() == "te****@coinspace.com"

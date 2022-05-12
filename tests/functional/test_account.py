@@ -13,6 +13,7 @@ class TestAccount(StaticLiveServerTestCase):
         options = Options()
         options.add_argument("--no-sandbox")
         options.add_argument("--headless")
+        options.add_argument("--disable-gpu")
         service = Service(executable_path=ChromeDriverManager().install())
         self.browser = webdriver.Chrome(service=service, options=options)
         self.client = Client()
