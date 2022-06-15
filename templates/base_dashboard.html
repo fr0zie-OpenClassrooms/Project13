@@ -19,19 +19,19 @@
         <div class="leftside-menu">
             <a href="" class="logo text-center logo-light">
                 <span class="logo-lg">
-                    <img src="{% static 'images/logo.png' %}" alt="" height="16">
+                    <img src="{% static 'images/logo.png' %}" alt="" height="32">
                 </span>
                 <span class="logo-sm">
-                    <img src="{% static 'images/logo_sm.png' %}" alt="" height="16">
+                    <img src="{% static 'images/logo_sm.png' %}" alt="" height="32">
                 </span>
             </a>
 
             <a href="" class="logo text-center logo-dark">
                 <span class="logo-lg">
-                    <img src="{% static 'images/logo-dark.png' %}" alt="" height="16">
+                    <img src="{% static 'images/logo-dark.png' %}" alt="" height="32">
                 </span>
                 <span class="logo-sm">
-                    <img src="{% static 'images/logo_sm_dark.png' %}" alt="" height="16">
+                    <img src="{% static 'images/logo_sm_dark.png' %}" alt="" height="32">
                 </span>
             </a>
 
@@ -43,6 +43,12 @@
                         <a href="{% url 'view-holdings' %}" class="side-nav-link">
                             <i class="uil-bitcoin-circle"></i>
                             <span>View holdings</span>
+                        </a>
+                    </li>
+                    <li class="side-nav-item">
+                        <a href="{% url 'view-transactions' %}" class="side-nav-link">
+                            <i class="uil-clipboard-alt"></i>
+                            <span>View transactions</span>
                         </a>
                     </li>
                     <li class="side-nav-item">
@@ -104,17 +110,6 @@
                     <button class="button-menu-mobile open-left">
                         <i class="mdi mdi-menu"></i>
                     </button>
-
-                    <div class="app-search dropdown d-none d-lg-block">
-                        <form>
-                            <div class="input-group">
-                                <input type="text" class="form-control dropdown-toggle" placeholder="Search..."
-                                    id="top-search">
-                                <span class="mdi mdi-magnify search-icon"></span>
-                                <button class="input-group-text btn-primary" type="submit">Search</button>
-                            </div>
-                        </form>
-                    </div>
 
                     <div id="popup">
                         {% if messages %}

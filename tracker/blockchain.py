@@ -1,4 +1,6 @@
 import os, requests
+from datetime import datetime
+
 from .models import Address
 
 BASE_URL = "https://api.etherscan.io/api"
@@ -8,21 +10,24 @@ BLOCKCHAINS = {
         "name": "Ethereum",
         "symbol": "ETH",
         "decimals": 18,
-        "url": "https://api.etherscan.io/api",
+        "url": "https://etherscan.io/",
+        "api_url": "https://api.etherscan.io/api",
         "api_key": os.environ["ETHERSCAN_API_KEY"],
     },
     "Polygon": {
         "name": "Polygon",
         "symbol": "MATIC",
         "decimals": 18,
-        "url": "https://api.polygonscan.com/api",
+        "url": "https://polygonscan.com/",
+        "api_url": "https://api.polygonscan.com/api",
         "api_key": os.environ["POLYGONSCAN_API_KEY"],
     },
     "Avalanche": {
         "name": "Avalanche",
         "symbol": "AVAX",
         "decimals": 18,
-        "url": "https://api.snowtrace.io/api",
+        "url": "https://snowtrace.io/",
+        "api_url": "https://api.snowtrace.io/api",
         "api_key": os.environ["SNOWTRACE_API_KEY"],
     },
 }
@@ -33,6 +38,7 @@ class Details:
     symbol = None
     decimals = None
     url = None
+    api_url = None
     api_key = None
     address = None
 
@@ -41,6 +47,7 @@ class Details:
         self.symbol = BLOCKCHAINS[blockchain]["symbol"]
         self.decimals = BLOCKCHAINS[blockchain]["decimals"]
         self.url = BLOCKCHAINS[blockchain]["url"]
+        self.api_url = BLOCKCHAINS[blockchain]["api_url"]
         self.api_key = BLOCKCHAINS[blockchain]["api_key"]
         self.address = address
 
@@ -55,7 +62,22 @@ class Details:
             "sort": "desc",
             "apikey": self.api_key,
         }
-        return requests.get(self.url, params).json()
+        return requests.get(self.api_url, params).json()
+
+    def get_transactions_details(self):
+        """Returns 10,000 last transactions details."""
+        txs = self.get_transactions()
+        transactions = []
+        for tx in txs["result"]:
+            transaction = Transaction()
+            transaction.date = tx["timeStamp"]
+            transaction.hash = tx["hash"]
+            transaction.url = self.url
+            transaction.token = tx["tokenName"]
+            transaction.sender = tx["from"]
+            transaction.receiver = tx["to"]
+            transactions.append(transaction)
+        return transactions
 
     def get_tokens(self):
         """Scans each transaction to return tokens owned."""
@@ -81,7 +103,7 @@ class Details:
             "tag": "latest",
             "apikey": self.api_key,
         }
-        result = requests.get(self.url, params).json()
+        result = requests.get(self.api_url, params).json()
         token = Token()
         token.name = self.name
         token.symbol = self.symbol
@@ -122,7 +144,7 @@ class Details:
                     "tag": "latest",
                     "apikey": self.api_key,
                 }
-                result = requests.get(self.url, params).json()
+                result = requests.get(self.api_url, params).json()
                 token.balance = float(result["result"]) / 10**token.decimals
         return tokens
 
@@ -154,10 +176,26 @@ def get_wallets_details(user):
     return wallets
 
 
+def get_transactions_details(user):
+    """Returns whole wallet transactions."""
+    addresses = Address.objects.filter(user=user)
+    wallets = []
+    for address in addresses:
+        label = address.label if address.label else address.public_key
+        wallet = Wallet(label)
+        for bc in BLOCKCHAINS:
+            d = Details(bc, address.public_key).get_transactions_details()
+            wallet.transactions.extend(d)
+        wallet.transactions.sort(key=lambda x: x.date, reverse=True)
+        wallets.append(wallet)
+    return wallets
+
+
 class Wallet:
     def __init__(self, label):
         self.label = label
         self.tokens = []
+        self.transactions = []
 
 
 class Token:
@@ -188,3 +226,28 @@ class Token:
     def get_price(self):
         """Returns token price rounded to 8 decimals."""
         return round(float(self.price), 8)
+
+
+class Transaction:
+    date = None
+    hash = None
+    url = None
+    token = None
+    sender = None
+    receiver = None
+
+    def get_date(self):
+        """Returns converted timestamp to date."""
+        return datetime.fromtimestamp(int(self.date))
+
+    def get_transaction_url(self):
+        """Returns transaction URL."""
+        return self.url + "tx/" + self.hash
+
+    def get_sender_url(self):
+        """Returns transaction URL."""
+        return self.url + "address/" + self.sender
+
+    def get_receiver_url(self):
+        """Returns transaction URL."""
+        return self.url + "address/" + self.receiver

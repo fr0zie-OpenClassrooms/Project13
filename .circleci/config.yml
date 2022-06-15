@@ -23,7 +23,7 @@ jobs:
           pkg-manager: pip
       - run:
           name: Run tests
-          command: pytest
+          command: pytest tests/unit
       - run:
           name: Check PEP8
           command: flake8

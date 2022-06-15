@@ -10,6 +10,14 @@
     bottom: 0;
 }
 
-.holdings {
+.holdings,
+.transactions {
     width: 25%;
+}
+
+.picture {
+    display: block;
+    height: 15em;
+    width: 15em;
+    margin-bottom: 1em;
 }

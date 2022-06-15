@@ -1,5 +1,12 @@
+from attr import attr
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth import get_user_model
+from django.contrib.auth.forms import (
+    UserCreationForm,
+    UserChangeForm,
+    AuthenticationForm,
+    PasswordChangeForm,
+)
 
 from .models import User
 
@@ -66,3 +73,32 @@ class LoginForm(AuthenticationForm):
     class Meta:
         model = User
         fields = ("username", "password", "remember_me")
+
+
+class PasswordForm(PasswordChangeForm):
+    old_password = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+    )
+    new_password1 = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+    )
+    new_password2 = forms.CharField(
+        required=True,
+        widget=forms.PasswordInput(attrs={"class": "form-control"}),
+    )
+
+    class Meta:
+        model = User
+        fields = ("old_password", "new_password1", "new_password2")
+
+
+class PictureForm(UserChangeForm):
+    picture = (
+        forms.ImageField()
+    )  # (widget=forms.FileInput(attrs={"class": "btn btn-primary"}))
+
+    class Meta:
+        model = User
+        fields = ("picture",)

@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
+from django.conf import settings
 from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 from django.urls import reverse
 from django.test import Client
@@ -13,9 +14,14 @@ class TestAccount(StaticLiveServerTestCase):
         options = Options()
         options.add_argument("--no-sandbox")
         options.add_argument("--headless")
-        options.add_argument("--disable-gpu")
-        service = Service(executable_path=ChromeDriverManager().install())
-        self.browser = webdriver.Chrome(service=service, options=options)
+        print(settings.DEBUG)
+        if settings.DEBUG:
+            service = Service("tests/functional/chromedriver")
+            self.browser = webdriver.Chrome(service=service)
+        else:
+            service = Service(executable_path=ChromeDriverManager().install())
+            self.browser = webdriver.Chrome(service=service, options=options)
+
         self.client = Client()
         self.credentials = {
             "username": "Test",

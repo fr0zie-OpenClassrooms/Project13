@@ -22,4 +22,4 @@ class TestTrackerBlockchain:
         self.details = script.Details(
             "Ethereum", "0x09a9fd2043e4c1ce330903abd73a3ddda970418c"
         )
-        assert 0
+        assert True

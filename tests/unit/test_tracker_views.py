@@ -10,15 +10,10 @@ from tracker.models import Address
 class TestTrackerViews:
     def setup_method(self):
         self.client = Client()
-        self.credentials = {
-            "username": "Test",
-            "email": "test@coinspace.com",
-            "password": "t8VhtmOUpYJ39Tb0",
-        }
         self.user = User.objects.create(
-            username=self.credentials["username"],
-            email=self.credentials["email"],
-            password=self.credentials["password"],
+            username="Test",
+            email="test@coinspace.com",
+            password="t8VhtmOUpYJ39Tb0",
         )
         self.wallet = {
             "label": "Test",
@@ -26,7 +21,7 @@ class TestTrackerViews:
         }
         self.wallet_not_found = {
             "label": "Test",
-            "public-key": "000000000000000000000000000000000000000000",
+            "public-key": "0x09a9fd2043e4c1ce3309",
         }
         self.wallet_incorrect = {
             "label": "Test",
@@ -34,10 +29,12 @@ class TestTrackerViews:
         }
         self.tracker_url = reverse("tracker")
         self.holdings_url = reverse("view-holdings")
+        self.transactions_url = reverse("view-transactions")
         self.connect_wallet_url = reverse("connect-wallet")
 
     @pytest.mark.django_db
     def test_user_tracker_page_access(self):
+        self.client.force_login(self.user)
         response = self.client.get(self.tracker_url)
         assert response.status_code == 200
 
@@ -49,40 +46,43 @@ class TestTrackerViews:
 
     @pytest.mark.django_db
     def test_user_connect_wallet_page_access(self):
+        self.client.force_login(self.user)
         response = self.client.get(self.connect_wallet_url)
         assert response.status_code == 200
 
     @pytest.mark.django_db
     def test_user_connect_wallet_correct_key(self):
-        path = reverse("connect-wallet"), self.wallet
-        response = self.client.post(path)
+        self.client.force_login(self.user)
+        response = self.client.post(reverse("connect-wallet"), self.wallet)
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
         assert (
             str(messages[0])
-            == "Wallet 0x09a9fd2043e4c1ce330903abd73a3ddda970418c successfully connected!"
+            == "Wallet <code>0x09a9fd2043e4c1ce330903abd73a3ddda970418c</code> successfully connected!"
         )
         assert response.status_code == 200
 
     @pytest.mark.django_db
     def test_user_connect_wallet_unexist_key(self):
-        path = reverse("connect-wallet"), self.wallet_not_found
-        response = self.client.post(path)
+        self.client.force_login(self.user)
+        response = self.client.post(reverse("connect-wallet"), self.wallet_not_found)
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
         assert (
             str(messages[0])
-            == "Wallet 000000000000000000000000000000000000000000 not found."
+            == "Address <code>0x09a9fd2043e4c1ce3309</code> does not exists."
         )
         assert response.status_code == 200
 
     @pytest.mark.django_db
     def test_user_connect_wallet_incorrect_key(self):
-        path = reverse("connect-wallet"), self.wallet_incorrect
-        response = self.client.post(path)
+        self.client.force_login(self.user)
+        response = self.client.post(reverse("connect-wallet"), self.wallet_incorrect)
         messages = list(get_messages(response.wsgi_request))
         assert len(messages) == 1
-        assert str(messages[0]) == "Incorrect wallet public key."
+        assert (
+            str(messages[0]) == "Address <code>0</code> is an invalid address format."
+        )
         assert response.status_code == 200
 
     @pytest.mark.django_db
@@ -94,4 +94,15 @@ class TestTrackerViews:
             user=self.user,
         )
         response = self.client.get(self.holdings_url)
+        assert response.context["wallets"][0].label == "Test"
+
+    @pytest.mark.django_db
+    def test_user_view_transactions(self):
+        self.client.force_login(self.user)
+        Address.objects.create(
+            label=self.wallet["label"],
+            public_key=self.wallet["public-key"],
+            user=self.user,
+        )
+        response = self.client.get(self.transactions_url)
         assert response.context["wallets"][0].label == "Test"

@@ -1,9 +1,12 @@
 from django.contrib import messages
-from django.contrib.auth.decorators import login_required
 from django.utils.safestring import mark_safe
 from django.views import View
 from django.shortcuts import redirect, render
-from .blockchain import get_address_details, get_wallets_details
+from .blockchain import (
+    get_address_details,
+    get_wallets_details,
+    get_transactions_details,
+)
 from .models import Address
 
 
@@ -25,7 +28,7 @@ class ConnectWallet(View):
         public_key = request.POST.get("public-key")
         details = get_address_details(public_key)
 
-        if not "error" in details:
+        if details["status"] == "1":
             address = Address.objects.filter(public_key=public_key, user=user)
 
             if address.exists():
@@ -34,7 +37,7 @@ class ConnectWallet(View):
                     mark_safe(f"Wallet <code>{public_key}</code> is already imported."),
                 )
             else:
-                if len(public_key) == 42:
+                if int(details["result"]) > 0:
                     address = Address.objects.create(
                         label=label, public_key=public_key, user=user
                     )
@@ -45,10 +48,15 @@ class ConnectWallet(View):
                         ),
                     )
                 else:
-                    messages.error(request, "Incorrect wallet public key.")
+                    messages.error(
+                        request, f"Address <code>{public_key}</code> does not exists."
+                    )
         else:
             messages.error(
-                request, mark_safe(f"Wallet <code>{public_key}</code> not found.")
+                request,
+                mark_safe(
+                    f"Address <code>{public_key}</code> is an invalid address format."
+                ),
             )
 
         return render(request, "tracker/connect-wallet.html", self.create_context())
@@ -58,7 +66,7 @@ class ConnectWallet(View):
         return context
 
 
-class Balance(View):
+class Holdings(View):
     def get(self, request):
         wallets = get_wallets_details(request.user)
         return render(
@@ -66,7 +74,24 @@ class Balance(View):
         )
 
     def post(self, request):
-        return render(request, "tracker/view-holdings.html", self.create_context())
+        return render(request, "tracker/view-holdings.html", self.create_context(None))
+
+    def create_context(self, wallets):
+        context = {"wallets": wallets}
+        return context
+
+
+class Transactions(View):
+    def get(self, request):
+        wallets = get_transactions_details(request.user)
+        return render(
+            request, "tracker/view-transactions.html", self.create_context(wallets)
+        )
+
+    def post(self, request):
+        return render(
+            request, "tracker/view-transactions.html", self.create_context(None)
+        )
 
     def create_context(self, wallets):
         context = {"wallets": wallets}

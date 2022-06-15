@@ -18,6 +18,14 @@ class TestAccountURLs:
         url = reverse("register")
         assert resolve(url).route == "account/register"
 
+    def test_change_picture(self):
+        url = reverse("change-picture")
+        assert resolve(url).route == "account/change-picture"
+
+    def test_change_password(self):
+        url = reverse("change-password")
+        assert resolve(url).route == "account/change-password"
+
     def test_recover_password(self):
         url = reverse("recover-password")
         assert resolve(url).route == "account/recover-password"

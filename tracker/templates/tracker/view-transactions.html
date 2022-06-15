@@ -1,0 +1,71 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="page-title-box">
+            <h4 class="page-title">Transactions</h4>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        {% for wallet in wallets %}
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h4 class="header-title mb-0" id="wallet-label">{{wallet.label}}</h4>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-centered table-nowrap mb-0">
+                        <thead>
+                            <tr>
+                                <th class="transactions" scope="col">Date</th>
+                                <th class="transactions" scope="col">Hash</th>
+                                <th class="transactions" scope="col">Token</th>
+                                <th class="transactions" scope="col">From</th>
+                                <th class="transactions text-end" scope="col">To</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for transaction in wallet.transactions %}
+                            <tr>
+                                <td class="transactions">
+                                    <span class="fw-semibold">
+                                        {{transaction.get_date}}
+                                    </span>
+                                </td>
+                                <td class="transactions">
+                                    <span class="fw-semibold">
+                                        <a href="{{transaction.get_transaction_url}}">{{transaction.hash}}</a>
+                                    </span>
+                                </td>
+                                <td class="transactions">
+                                    <span class="fw-semibold">
+                                        {{transaction.token}}
+                                    </span>
+                                </td>
+                                <td class="transactions">
+                                    <span class="fw-semibold">
+                                        <a href="{{transaction.get_sender_url}}">{{transaction.sender}}</a>
+                                    </span>
+                                </td>
+                                <td class="transactions text-end">
+                                    <span class="fw-semibold">
+                                        <a href="{{transaction.get_receiver_url}}">{{transaction.receiver}}</a>
+                                    </span>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% endblock %}

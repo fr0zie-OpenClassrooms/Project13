@@ -8,4 +8,70 @@
         </div>
     </div>
 </div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="input-types-preview">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form method="POST" action="{% url 'change-picture' %}" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label for="picture" class="form-label">Picture</label>
+                                        <img id="picture" name="picture" class="picture rounded"
+                                            src="{% static 'images/users/avatar-1.jpg' %}">
+                                        <button type="submit" class="btn btn-primary rounded-pill">Change
+                                            picture</button>
+                                    </div>
+                                </form>
+                                <div class="mb-3">
+                                    <label for="username" class="form-label">Username</label>
+                                    <input type="text" id="username" name="username" class="form-control"
+                                        value="{{user.username}}" disabled>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="text" id="email" name="email" class="form-control"
+                                        value="{{user.email}}" disabled>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+                <div class="tab-content">
+                    <div class="tab-pane show active" id="input-types-preview">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <form method="POST" action="{% url 'change-password' %}">
+                                    {% csrf_token %}
+                                    <div class="mb-3">
+                                        <label class="form-label">Old password</label>
+                                        {{password_form.old_password}}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">New password</label>
+                                        {{password_form.new_password1}}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Confirm password</label>
+                                        {{password_form.new_password2}}
+                                    </div>
+                                    <button type="submit" class="btn btn-primary rounded-pill">Change password</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

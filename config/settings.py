@@ -8,6 +8,8 @@ load_dotenv()
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = "static/"
+MEDIA_URL = "images/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
@@ -102,6 +104,7 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+LOGIN_URL = "/account/login"
 
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"

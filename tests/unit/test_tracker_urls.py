@@ -13,3 +13,7 @@ class TestTrackerURLs:
     def test_view_holdings(self):
         url = reverse("view-holdings")
         assert resolve(url).route == "dashboard/tracker/holdings"
+
+    def test_view_transactions(self):
+        url = reverse("view-transactions")
+        assert resolve(url).route == "dashboard/tracker/transactions"
