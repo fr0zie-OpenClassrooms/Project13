@@ -17,6 +17,8 @@ jobs:
       - image: cimg/openjdk:17.0-browsers
     environment:
       SECRET_KEY: fPajkKdegtxAKkEzlJ9_vxmNScQZvKS7p6-eb-yRboPkd_nSrMKDaFYbh4BjMpydKl94iF6vFJYoQUTbQ9izow
+      DB_USER: root
+      DB_PASSWORD: p455w0rd
 
     steps:
       - browser-tools/install-chrome
