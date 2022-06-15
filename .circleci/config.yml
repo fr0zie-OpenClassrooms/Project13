@@ -22,10 +22,6 @@ jobs:
       - python/install-packages:
           pkg-manager: pip
       - run:
-          name: Set environment variables
-          environment:
-            DJANGO_SETTINGS_MODULE: config.settings
-      - run:
           name: Run tests
           command: pytest tests/unit
       - run:
