@@ -15,6 +15,8 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
       - image: cimg/openjdk:17.0-browsers
+    environment:
+      SECRET_KEY: fPajkKdegtxAKkEzlJ9_vxmNScQZvKS7p6-eb-yRboPkd_nSrMKDaFYbh4BjMpydKl94iF6vFJYoQUTbQ9izow
 
     steps:
       - browser-tools/install-chrome
