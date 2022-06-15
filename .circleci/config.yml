@@ -23,7 +23,8 @@ jobs:
           pkg-manager: pip
       - run:
           name: Set environment variables
-          command: export DJANGO_SETTINGS_MODULE=config.settings
+          environment:
+            DJANGO_SETTINGS_MODULE: config.settings
       - run:
           name: Run tests
           command: pytest tests/unit
