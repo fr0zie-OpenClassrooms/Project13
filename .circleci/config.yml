@@ -15,17 +15,8 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
       - image: cimg/openjdk:17.0-browsers
-    environment:
-      SECRET_KEY: fPajkKdegtxAKkEzlJ9_vxmNScQZvKS7p6-eb-yRboPkd_nSrMKDaFYbh4BjMpydKl94iF6vFJYoQUTbQ9izow
-      DB_USER: root
-      DB_PWD: p455w0rd
-      COINMARKETCAP_API_KEY: dc066f41-8a46-4bda-92e6-6be9223e68b7
-      ETHERSCAN_API_KEY: JVZ59N9CEMX2I9JEBEA121473QEV2VH6WY
-      POLYGONSCAN_API_KEY: U7SJM348V4SFMZ95DSPIY23UJXU9KNRBEU
-      SNOWTRACE_API_KEY: J8QQ4DS4HUFMQEB1J21S8VZBAPGT6FY8BU
 
     steps:
-      - browser-tools/install-chrome
       - checkout
       - python/install-packages:
           pkg-manager: pip

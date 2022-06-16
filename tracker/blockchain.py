@@ -115,9 +115,11 @@ class Details:
         """Returns tokens owned price and 24hrs change."""
         tokens = self.get_tokens()
         for token in tokens:
-            params = {"symbol": token.symbol}
-            headers = {"X-CMC_PRO_API_KEY": os.environ["COINMARKETCAP_API_KEY"]}
-            result = requests.get(CMC_URL, params, headers=headers).json()
+            params = {
+                "symbol": token.symbol,
+                "CMC_PRO_API_KEY": "dc066f41-8a46-4bda-92e6-6be9223e68b7",
+            }
+            result = requests.get(CMC_URL, params).json()
             try:
                 token.price = float(
                     result["data"][token.symbol][0]["quote"]["USD"]["price"]
