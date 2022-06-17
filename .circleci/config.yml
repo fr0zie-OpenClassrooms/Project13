@@ -6,7 +6,6 @@ orbs:
 
 environment:
   DJANGO_SETTINGS_MODULE: config.settings
-  SECRET_KEY: DiRR${VXyaEKW:,iqIf]=3G+kc%(0-
 
 jobs:
   build-and-test:
@@ -27,6 +26,8 @@ jobs:
       - run:
           name: Run tests
           command: pytest tests/unit
+          environment:
+            SECRET_KEY: DiRR${VXyaEKW:,iqIf]=3G+kc%(0-
       - run:
           name: Check PEP8
           command: flake8
