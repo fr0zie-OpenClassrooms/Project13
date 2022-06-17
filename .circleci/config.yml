@@ -27,6 +27,10 @@ jobs:
             SECRET_KEY: DiRR${VXyaEKW:,iqIf]=3G+kc%(0-
             DB_USER: root
             DB_PWD: pwd
+            COINMARKETCAP_API_KEY: ot6mVCthSpu9RgiTLSWIHjlI7KlpqpES
+            ETHERSCAN_API_KEY: ahE0AaSjPzBkSUwhj3e05nSocaeIfN34
+            POLYGONSCAN_API_KEY: 4eAxFNj4gCdVxaWgenMafAp6DoVGFT5Y
+            SNOWTRACE_API_KEY: DVDM1OKivUnqcSNWBcjU49XDswhzz3b3
       - run:
           name: Check PEP8
           command: flake8
