@@ -4,6 +4,9 @@ orbs:
   python: circleci/python@1.2
   browser-tools: circleci/browser-tools@1.2.4
 
+environment:
+  DJANGO_SETTINGS_MODULE: config.settings
+
 jobs:
   build-and-test:
     docker:
