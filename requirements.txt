@@ -50,6 +50,7 @@ Pillow==9.1.1
 platformdirs==2.5.2
 pluggy==1.0.0
 protobuf==3.20.0
+psycopg2==2.9.3
 py==1.11.0
 pycodestyle==2.8.0
 pycparser==2.21
