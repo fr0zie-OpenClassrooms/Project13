@@ -2,6 +2,7 @@ version: 2.1
 
 orbs:
   python: circleci/python@1.2
+  wait-for: cobli/wait-for@1.0.0
 
 environment:
   DJANGO_SETTINGS_MODULE: config.settings
@@ -22,6 +23,7 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
+      - wait-for/postgres
       - run:
           name: Run tests
           command: pytest tests/unit
