@@ -1,5 +1,4 @@
-import os
-import sys
+import os, dj_database_url
 from dotenv import load_dotenv
 from pathlib import Path
 from django.contrib.messages import constants as messages
@@ -86,6 +85,9 @@ DATABASES = {
         "PORT": "5432",
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES["default"].update(db_from_env)
 
 AUTH_USER_MODEL = "account.User"
 AUTHENTICATION_BACKENDS = ["account.backends.EmailBackend"]
