@@ -23,6 +23,11 @@ jobs:
       - python/install-packages:
           pkg-manager: pip
       - run:
+          name: Run migrations
+          command: |
+            python manage.py makemigrations
+            python manage.py migrate
+      - run:
           name: Run tests
           command: pytest tests/unit
           environment:
