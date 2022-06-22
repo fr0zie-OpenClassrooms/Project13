@@ -30,19 +30,18 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
-      - run: |
-          mkdir account/migrations
-          touch account/migrations/__init__.py
-          mkdir home/migrations
-          touch home/migrations/__init__.py
-          mkdir tracker/migrations
-          touch tracker/migrations/__init__.py
+      - run:
+          name: Create migration directories
+          command: |
+            mkdir account/migrations
+            touch account/migrations/__init__.py
+            mkdir home/migrations
+            touch home/migrations/__init__.py
+            mkdir tracker/migrations
+            touch tracker/migrations/__init__.py
       - run:
           name: Make migrations
           command: python manage.py makemigrations
-      - run:
-          name: Show migrations
-          command: python manage.py showmigrations
       - run:
           name: Migrate
           command: python manage.py migrate
