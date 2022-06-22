@@ -9,15 +9,6 @@ environment:
 jobs:
   build-and-test:
     docker:
-      environment:
-        SECRET_KEY: DiRR${VXyaEKW:,iqIf]=3G+kc%(0-
-        DB_USER: root
-        DB_PWD: XU7db6BTsc
-        COINMARKETCAP_API_KEY: ot6mVCthSpu9RgiTLSWIHjlI7KlpqpES
-        ETHERSCAN_API_KEY: ahE0AaSjPzBkSUwhj3e05nSocaeIfN34
-        POLYGONSCAN_API_KEY: 4eAxFNj4gCdVxaWgenMafAp6DoVGFT5Y
-        SNOWTRACE_API_KEY: DVDM1OKivUnqcSNWBcjU49XDswhzz3b3
-        
       - image: cimg/python:3.8
         environment:
           DATABASE_URL: postgresql://root@localhost/coinspace_test
@@ -26,6 +17,14 @@ jobs:
           POSTGRES_USER: root
           POSTGRES_PASSWORD: XU7db6BTsc
           POSTGRES_DB: coinspace_test
+    environment:
+      SECRET_KEY: DiRR${VXyaEKW:,iqIf]=3G+kc%(0-
+      DB_USER: root
+      DB_PWD: XU7db6BTsc
+      COINMARKETCAP_API_KEY: ot6mVCthSpu9RgiTLSWIHjlI7KlpqpES
+      ETHERSCAN_API_KEY: ahE0AaSjPzBkSUwhj3e05nSocaeIfN34
+      POLYGONSCAN_API_KEY: 4eAxFNj4gCdVxaWgenMafAp6DoVGFT5Y
+      SNOWTRACE_API_KEY: DVDM1OKivUnqcSNWBcjU49XDswhzz3b3
 
     steps:
       - checkout
