@@ -34,6 +34,9 @@ jobs:
           name: Make migrations
           command: python manage.py makemigrations
       - run:
+          name: Show migrations
+          command: python manage.py showmigrations
+      - run:
           name: Migrate
           command: python manage.py migrate
       - run:
