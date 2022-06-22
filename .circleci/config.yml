@@ -30,6 +30,13 @@ jobs:
       - checkout
       - python/install-packages:
           pkg-manager: pip
+      - run: |
+          mkdir account/migrations
+          touch account/migrations/__init__.py
+          mkdir home/migrations
+          touch home/migrations/__init__.py
+          mkdir tracker/migrations
+          touch tracker/migrations/__init__.py
       - run:
           name: Make migrations
           command: python manage.py makemigrations
