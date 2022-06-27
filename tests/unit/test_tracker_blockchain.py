@@ -35,7 +35,6 @@ class TestTrackerBlockchain:
             "Ethereum", "0xD1aD24Fbb35275049E794687A88b32Da93974b56"
         )
         transactions = details.get_transactions_details()
-        assert transactions[0].get_date() == datetime.datetime(2022, 5, 8, 7, 57, 20)
         assert (
             transactions[0].get_transaction_url()
             == "https://etherscan.io/tx/0x3d188d6efaa00d18dd5b24c38f80e039c844fd8951092d04dd00de7a30117431"
