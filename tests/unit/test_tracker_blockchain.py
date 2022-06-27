@@ -1,5 +1,4 @@
 import requests
-import datetime
 from django.test import Client
 from unittest.mock import Mock
 
