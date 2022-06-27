@@ -1,4 +1,5 @@
-import pytest, requests, datetime
+import requests
+import datetime
 from django.test import Client
 from unittest.mock import Mock
 
@@ -103,4 +104,4 @@ class TestTrackerBlockchain:
         assert tokens[0].balance == 1000
         assert tokens[0].price == 0.8950706864450875
         assert tokens[0].pl() == 12.23
-        assert tokens[0].pl_pos() == True
+        assert tokens[0].pl_pos() is True

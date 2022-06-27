@@ -3,7 +3,7 @@ import pytest
 from django.urls import reverse
 from django.test import Client
 
-from account.forms import LoginForm, RegistrationForm
+from account.forms import RegistrationForm
 from account.models import User
 
 
@@ -22,7 +22,7 @@ class TestAccountViews:
     @pytest.mark.django_db
     def test_user_registration_form(self):
         form = RegistrationForm(data=self.credentials)
-        assert form.is_valid() == True
+        assert form.is_valid() is True
 
     @pytest.mark.django_db
     def test_user_registration_page_access(self):
@@ -38,7 +38,7 @@ class TestAccountViews:
             username=self.credentials["username"],
         )
         assert response.status_code == 302
-        assert user.is_authenticated == True
+        assert user.is_authenticated is True
 
     @pytest.mark.django_db
     def test_user_login_page_access(self):
@@ -56,4 +56,4 @@ class TestAccountViews:
             self.login_url, self.credentials, format="text/html"
         )
         assert response.status_code == 302
-        assert user.is_authenticated == True
+        assert user.is_authenticated is True

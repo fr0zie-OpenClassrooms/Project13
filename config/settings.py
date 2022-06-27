@@ -1,7 +1,19 @@
-import os, dj_database_url
+import os
+import dj_database_url
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 from dotenv import load_dotenv
 from pathlib import Path
 from django.contrib.messages import constants as messages
+
+sentry_sdk.init(
+    dsn="https://1548c90e148841c18fc10510e58b8970@o1116273.ingest.sentry.io/6525894",
+    integrations=[
+        DjangoIntegration(),
+    ],
+    traces_sample_rate=1.0,
+    send_default_pii=True,
+)
 
 load_dotenv()
 

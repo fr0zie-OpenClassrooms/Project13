@@ -1,7 +1,7 @@
 from django.contrib import messages
 from django.utils.safestring import mark_safe
 from django.views import View
-from django.shortcuts import redirect, render
+from django.shortcuts import render
 from .blockchain import (
     get_address_details,
     get_wallets_details,

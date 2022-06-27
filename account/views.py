@@ -84,7 +84,7 @@ def change_picture(request):
     form = PictureForm(request.user, request.POST)
     if form.is_valid():
         form.save()
-        if request.FILES.get("picture", None) != None:
+        if request.FILES.get("picture", None) is not None:
             request.user.picture = request.FILES["picture"]
             request.user.save()
         messages.success(request, "Picture has been changed.")
