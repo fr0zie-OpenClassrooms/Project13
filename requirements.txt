@@ -84,5 +84,6 @@ varint==1.0.2
 web3==5.29.0
 webdriver-manager==3.5.4
 websockets==9.1
+whitenoise==6.2.0
 wsproto==1.1.0
 yarl==1.7.2

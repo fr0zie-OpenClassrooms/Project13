@@ -21,6 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 STATIC_URL = "static/"
 MEDIA_URL = "images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "static/images")
+# STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
@@ -29,7 +30,7 @@ SECRET_KEY = os.environ["SECRET_KEY"]
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["146.190.17.239", "coinspace.tech", "localhost"]
 
 INSTALLED_APPS = [
     "home.apps.HomeConfig",
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     # "django_hosts.middleware.HostsResponseMiddleware",
 ]
 
