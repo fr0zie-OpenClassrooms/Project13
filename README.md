@@ -50,7 +50,7 @@ DB_USER=[YOUR_POSTGRE_USER]
 DB_PWD=[YOUR_POSTGRE_PASSWORD]
 ```
 
-Replace values between brackets with your own.
+Replace values between brackets with your own (don't forget to also remove the brackets).
 
 ## Usage
 
